@@ -90,23 +90,10 @@ namespace frmXO
             return 0;
         }
 
-        // This is the minimax function. It considers all 
-        // the possible ways the game can go and returns 
-        // the value of the board 
         static int minimax(char[,] board,
                            int depth, bool isMaximizing)
         {
-            //int score = evaluate(board);
-            //Console.WriteLine($"Depth: {depth}, Maximizing: {isMaximizing}, Score: {score}");
-            /*if (score == -10 || score == 10 || score == 0)
-            {
-                if (score < 0)
-                    score += depth;
-                else if (score > 0)
-                    score -= depth;
-
-                return score;
-            }*/
+            
             int score = evaluate(board);
             if (score == 10) return score - depth; // Player X wins, subtract depth
             if (score == -10) return score + depth; // Player O wins, add depth
@@ -167,7 +154,7 @@ namespace frmXO
         }
 
         // This will return the best possible 
-        // move for the player 
+        // move for the AI
         static Move FindBestMove(char[,] board)
         {
             int bestVal = int.MaxValue;
@@ -196,7 +183,7 @@ namespace frmXO
                         board[i, j] = '_';
 
                         // If the value of the current move is 
-                        // more than the best value, then update 
+                        // less than the best value, then update 
                         // best/ 
                         if (moveVal < bestVal)
                         {
@@ -225,6 +212,7 @@ namespace frmXO
                 }
             }
         }
+        //Create the playing field
         private Button CreateButton(int i, int j)
         {
             return new Button
@@ -281,6 +269,7 @@ namespace frmXO
             this.Close();
         }
         #endregion
+        //Make the changes on the player move
         void PlayerMove(object sender)
         {
             Button btn = sender as Button;
@@ -306,20 +295,10 @@ namespace frmXO
                         }
                     }
                 }  
-                /*else
-                {
-                   
-                }*/
+              
                 
             }
-            /*for (int i = 0;i < 3;i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    Console.WriteLine(board[i,j]);
-                }
-                //Console.WriteLine("\n");
-            }*/
+           
             
             Console.WriteLine(playMove.row.ToString(),playMove.col.ToString());
             if (EndGame())
@@ -330,6 +309,7 @@ namespace frmXO
 
         
         #region end_game
+        //Check if the game is over and compare the fields
         public bool EndGame()
         {
             return CheckRow() || CheckColumn() || CheckDiagonal() || CheckTie();
